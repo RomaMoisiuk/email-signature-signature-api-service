@@ -7,6 +7,7 @@ import { TemplateService } from './template.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Signature, Template, UserData])],
+  exports: [TypeOrmModule],
   providers: [TemplateService],
 })
 export class TemplateModule { }

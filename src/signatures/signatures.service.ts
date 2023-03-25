@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { replaceMultiple } from 'src/utils/replacer';
 import { Repository } from 'typeorm';
@@ -23,13 +23,10 @@ export class SignaturesService {
     const user = await this.userDataService.findUserDataByUserId(userId);
 
     if (!user) {
-      throw new ForbiddenException('Please add user details first');
+      throw new BadRequestException('Please add user details first');
     }
 
     const { email, fullName, company, title, address, phone, template } = user;
-
-    console.log('UUUseeesr', user);
-
 
     const mapReplaceObj = {
       '{email}': email,
@@ -40,10 +37,25 @@ export class SignaturesService {
       '{phone}': phone,
     };
 
-    const signature = replaceMultiple(template.layout, mapReplaceObj);
+    const signatureString = replaceMultiple(template.layout, mapReplaceObj);
 
-    await this.signaturesRepository.save({ userId, signature });
+    const signature = await this.signaturesRepository.findOneBy({ userId });
 
-    return { html: signature };
+    if (!signature) {
+      await this.signaturesRepository.insert({
+        userId,
+        signature: signatureString,
+      });
+    } else {
+      await this.signaturesRepository.update(
+        { id: signature.id },
+        {
+          userId,
+          signature: signatureString,
+        },
+      );
+    }
+
+    return { html: signatureString };
   }
 }

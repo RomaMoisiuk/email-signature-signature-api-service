@@ -5,7 +5,7 @@ const replaceMultiple = (
   const re = new RegExp(Object.keys(mapObj).join('|'), 'gi');
 
   return str.replace(re, (matched) => {
-    return mapObj[matched.toLowerCase()];
+    return mapObj[matched];
   });
 };
 

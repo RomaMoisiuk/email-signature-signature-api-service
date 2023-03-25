@@ -3,6 +3,8 @@ import { runSeeders, SeederOptions } from 'typeorm-extension';
 import * as dotenv from 'dotenv';
 
 import MainSeeder from './main.seeder';
+import { UserData } from '../../user-data/user-data.entity';
+import { Signature } from '../../signatures/signature.entity';
 import { Template } from '../../template/template.entity';
 
 dotenv.config();
@@ -14,7 +16,7 @@ const options: DataSourceOptions & SeederOptions = {
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
-  entities: [Template],
+  entities: [Template, UserData, Signature],
   synchronize: true,
   factories: [],
   seeds: [MainSeeder],

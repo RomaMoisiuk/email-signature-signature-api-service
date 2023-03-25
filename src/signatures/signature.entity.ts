@@ -5,7 +5,7 @@ export class Signature {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   userId: number;
 
   @Column()

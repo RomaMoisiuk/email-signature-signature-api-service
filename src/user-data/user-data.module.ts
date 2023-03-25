@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Signature } from 'src/signatures/signature.entity';
-import { Template } from 'src/template/template.entity';
+import { Template } from '../template/template.entity';
 import { UserData } from './user-data.entity';
 import { UserDataService } from './user-data.service';
 import { UserDataController } from './user-data.controller';

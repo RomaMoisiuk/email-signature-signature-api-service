@@ -1,4 +1,4 @@
-import { Template } from 'src/template/template.entity';
+import { Template } from '../../template/template.entity';
 import { setSeederFactory } from 'typeorm-extension';
 
 export const TemplateFactory = setSeederFactory(Template, () => {

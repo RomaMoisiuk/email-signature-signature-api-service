@@ -1,10 +1,10 @@
-import { Template } from 'src/template/template.entity';
+import { Template } from '../template/template.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToOne,
   JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 
 @Entity()
@@ -15,8 +15,8 @@ export class UserData {
   @Column()
   userId: number;
 
-  @OneToOne(() => Template)
-  @JoinColumn({ name: 'templateId' })
+  @ManyToOne(() => Template)
+  @JoinColumn()
   template: Template;
 
   @Column()
