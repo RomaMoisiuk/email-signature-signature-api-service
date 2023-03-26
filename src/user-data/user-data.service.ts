@@ -11,6 +11,8 @@ export class UserDataService {
   ) { }
 
   async findUserDataByUserId(userId: number): Promise<UserData> {
+    console.log('fetch user DATA');
+
     const userData = await this.userDataRepository.findOne({
       where: { userId },
       relations: ['template'],
@@ -20,6 +22,8 @@ export class UserDataService {
   }
 
   async createOrUpdateUserData(userData): Promise<UserData> {
+    console.log('USER data create/update');
+
     const data = new UserData();
 
     data.userId = userData.userId;

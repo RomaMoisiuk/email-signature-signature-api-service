@@ -1,6 +1,7 @@
-version: '3.4'
+version: "3.8"
+
 services:
-  core_api_db:
+  signatures_db:
     image: postgres
     environment:
       - POSTGRES_DB=signatures-db
@@ -8,10 +9,31 @@ services:
       - POSTGRES_PASSWORD=password
     restart: always
     volumes:
-      - './data/postgres:/var/lib/postgresql/data'
+      - "./data/postgres_signatures:/var/lib/postgresql/data"
     ports:
-      - '5434:5432'
+      - "5433:5432"
     command: postgres -c listen_addresses='*'
-volumes:
-  postgres:
-  pgadmin:
+    networks:
+      - signatures
+
+  api:
+    build:
+      context: .
+    command: sh -c "npm run db:seed & npm run start:prod"
+    environment:
+      - DB_HOST=signatures_db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASS=password
+      - JWT_SECRET=some-jwt-secret
+      - SIGNATURES_DATABASE_URL=postgres://postgres:password@signatures_db:5433/signatures-db
+    restart: always
+    ports:
+      - "3001:3001"
+    depends_on:
+      - signatures_db
+    networks:
+      - signatures
+
+networks:
+  signatures:
