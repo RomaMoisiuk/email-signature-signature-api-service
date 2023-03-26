@@ -2,32 +2,11 @@
 
 Signatures microservice
 
-## Installation
-
-```bash
-$ npm install
-```
-
 ## Running the app
 
 ```bash
 # docker
 $ docker-compose up
-
-```bash
-# DB seed
-$ npm run db:seed
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
 
 ## Test
 
